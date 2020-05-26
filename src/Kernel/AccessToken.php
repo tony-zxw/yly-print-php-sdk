@@ -81,6 +81,9 @@ abstract class AccessToken implements AccessTokenInterface
         }
 
         $token = $this->requestToken($this->getCredentials($refresh_token), true);
+        if ($this->app->config->get('log_access_token', 1) === 1) {
+            $this->app->logger->debug('Set token:', $token);
+        }
         $this->setToken(
             $token[$this->bodyKey][$this->tokenKey],
             $token['expires_in'] ?? 2592000,
@@ -118,7 +121,6 @@ abstract class AccessToken implements AccessTokenInterface
 
     public function requestToken(array $credentials, $toArray = false)
     {
-//        {"error":"0","error_description":"success","body":{"access_token":"839cdb6fc9f0422092bb011f620f7d8a","refresh_token":"16ecc32c7bc6455a84aaf0fbe8351081","machine_code":"","expires_in":2592000,"scope":"all"}}
         $response = $this->sendRequest($credentials);
         $result = json_decode($response->getBody()->getContents(), true);
         $formatted = $this->castResponseToType($response, $this->app['config']->get('response_type'));
