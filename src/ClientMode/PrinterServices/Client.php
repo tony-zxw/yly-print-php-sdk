@@ -49,7 +49,7 @@ class Client extends BaseClient
             'content' => $content,
             'is_file' => $isFile,
         );
-        if (!empty($aid)){
+        if (!empty($aid)) {
             $params ['aid'] = $aid;
         }
         return $this->httpPostJson('printer/setvoice', $params);
@@ -216,10 +216,20 @@ class Client extends BaseClient
      * @param $pageSize int 查询条数
      * @return mixed
      */
-    public function getOrderPagingList($machineCode, $pageIndex = 1 , $pageSize = 10)
+    public function getOrderPagingList($machineCode, $pageIndex = 1, $pageSize = 10)
     {
         return $this->httpPostJson('printer/getorderpaginglist', array('machine_code' => $machineCode, 'page_index' => $pageIndex, 'page_size' => $pageSize));
     }
 
+    /**
+     * 获取终端状态接口
+     *
+     * @param $machineCode string 机器码
+     * @return array|object|\Psr\Http\Message\ResponseInterface|string|\YLYPlatform\Kernel\Support\Collection
+     */
+    public function getPrintStatus($machineCode)
+    {
+        return $this->httpPostJson('printer/getprintstatus', array('machine_code' => $machineCode));
+    }
 
 }

@@ -63,7 +63,7 @@ $config = [
 
 ];
 // 自有应用服务模式
-$app = Factory::clientmode($config);
+$app = Factory::clientMode($config);
 
 //获取token
 $token = $app['access_token']->getToken();
