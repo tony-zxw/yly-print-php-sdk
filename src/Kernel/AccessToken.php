@@ -91,7 +91,7 @@ abstract class AccessToken implements AccessTokenInterface
             $token[$this->bodyKey][$this->machineCodeKey] ?? ''
         );
 
-        return $token;
+        return $cache->get($cacheKey);//$token;
 
     }
 
